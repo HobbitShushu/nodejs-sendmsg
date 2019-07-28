@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat List</title>
+    <!--<link rel='stylesheet' href='/stylesheets/style.css' />-->
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p><ul>
+      <% data.forEach(function(row){ %>
+        <li>
+          <%= row.user_id %>
+          <% for(key in row.last_chat){ %>
+            <%= key %>
+            <%= row.last_chat[key] %>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul></p>
+  </body>
+</html>

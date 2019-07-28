@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Room</title>
+    <!--<link rel='stylesheet' href='/stylesheets/style.css' />-->
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p>Detail Chat Room</p>
+    <p><ul>
+      <% data.forEach(function(row){ %>
+        <li>
+          <%= row.sender %>
+          <%= row.message %>
+          <%= row.send_time %>
+        </li>
+      <% }) %>
+    </ul></p>
+    <p><button id='real_time' onclick="enter_realTime_chat();">
+        Enter Real Time Chat
+    </button></p>
+
+    <script>
+        function enter_realTime_chat() {
+            console.log('enter real time')
+            
+        }
+    </script>
+  </body>
+</html>
