@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const AccountController = require('../controllers/Account')
 
+
 // login page
 //router.get('/', AccountController.get_all_user);
 router.get('/', function(req, res, next){
-    console.log('Login Page')
     res.render('account')
 });
 

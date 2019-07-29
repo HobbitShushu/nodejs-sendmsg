@@ -1,5 +1,4 @@
 const app = require('./app')
-const real_time_server = require('./real_time_app')
 const mysqlDB = require('./database').mysql
 
 mysqlDB.connect(function(err) {
@@ -9,4 +8,3 @@ mysqlDB.connect(function(err) {
 });
 
 app.listen(3000)
-real_time_server.listen(3010)

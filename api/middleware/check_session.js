@@ -1,5 +1,5 @@
 module.exports.checkSession = (req, res, next) => {
-    const sess = req.session.username
+    const sess = req.session.uid
     if( sess ){
         console.log(sess);
         next();

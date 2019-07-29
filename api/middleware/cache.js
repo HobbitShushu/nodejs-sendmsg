@@ -1,5 +1,4 @@
 const redis_client = require('../../database').redis
-const promise = require('promise')
 r_table = {'list':0, 'detail':1, 'user_info':2}
 
 get_redis = (type, name) => {

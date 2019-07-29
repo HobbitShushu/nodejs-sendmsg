@@ -59,7 +59,6 @@ module.exports.try_login = (req, res, next) => {
             })
         }
         else {
-            // rows[0] = packet Data - list
             rows[0].forEach((row) => {
                 console.log(row.user_uid + " " +
                     row.user_name + " " +
@@ -76,9 +75,11 @@ module.exports.try_login = (req, res, next) => {
                 console.log(req.session.uid + " : " + req.session.user_name)
             })
             next();
-            //return res.status(200).json({
-            //    result: rows[0][0]
-            //})
+            /* Json Form Send
+            return res.status(200).json({
+                result: rows[0][0]
+            })
+            */
         }
     })
 };

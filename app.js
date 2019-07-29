@@ -9,7 +9,6 @@ const morgan = require('morgan')
 const bodyparser = require('body-parser')
 const session = require('express-session')
 
-const cache = require('./api/middleware/cache')
 const accountRouter = require('./api/routes/Account')
 const chatRouter = require('./api/routes/Chatting')
 
@@ -47,26 +46,21 @@ app.use((req, res, next) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('socket connection ', + socket.id)
-    //var name = 'user' + socket.id
+    console.log('socket connection')
+    //console.log(socket.id)
     //io.to(socket.id).emit('change name', name)
-    socket.join('test_room')
+    socket.on('login', function(name) {
+        console.log('login');
+        socketManager.setSocket(socket, name);  
+    })
 
     socket.on('disconnect', function(v) {
-        console.log('socket disconnect:' + v)
-        socket.leave('test_room')
+        socketManager.leaveSocket(socket, v);
     });
 
     socket.on('send_message', function(name, msg) {
-        console.log(name + ' ' + msg)
-        socket.emit('receive_message', name, msg);
-        socket.broadcast.emit('test_room', name, msg)
-    })
-
-    socket.on('enter', function(name) {
-        result = socketManager.getSocketByName(name)
-        console.log(result)
-    })
+        socketManager.send_message(socket, name, msg);
+    });
 })
 
 app.use('/account', accountRouter);
