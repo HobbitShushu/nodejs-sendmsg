@@ -1,5 +1,5 @@
 module.exports.checkSession = (req, res, next) => {
-    const sess = req.session.uid
+    const sess = req.session
     if( sess ){
         console.log(sess);
         next();
@@ -13,7 +13,6 @@ module.exports.checkOwner = (req, res, next) => {
     const sess = req.session
     if( sess.device_id == req.params.username )
         next()
-    
     else
         return res.status(401).json({error: 'Auth Fail'})
 }

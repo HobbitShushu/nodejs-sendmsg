@@ -55,7 +55,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', function(v) {
-        socketManager.leaveSocket(socket, v);
+        socketManager.leaveSocket(io, socket, v);
     });
 
     socket.on('send_message', function(name, msg) {

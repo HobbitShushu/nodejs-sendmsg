@@ -93,7 +93,7 @@ module.exports.send_random_msg = (req, res, next) => {
             const chatIndex = helper.genUuid()
             const data = JSON.stringify({
                 chat_id: chatIndex,
-                sender: req.session.uid,
+                sender: req.session.user_name,
                 message: req.body.msg,
                 send_time: Date.now()
             })
@@ -101,7 +101,7 @@ module.exports.send_random_msg = (req, res, next) => {
             promise_list.push(cache.hset('list', req.session.uid, rows[0][0].user_uid, data))
             promise_list.push(cache.hset('list', rows[0][0].user_uid, req.session.uid, data))
             promise_list.push(cache.rpush('detail', chatIndex, JSON.stringify({
-                sender: req.session.uid,
+                sender: req.session.user_name,
                 message: req.body.msg,
                 send_time: Date.now()
             })))
@@ -143,7 +143,7 @@ module.exports.reply_msg = (req, res, next) => {
     .then(result => {
         /*[{sender, message, send_time}]*/
         result = JSON.parse(result)
-        if(result.sender == 0){
+        if(result.sender == 'admin'){
             return res.status(301).json({
                 message:'Its not exist Room'
             });
@@ -194,7 +194,7 @@ module.exports.delete_msg = (req, res, next) => {
     cache.hdel('list', req.session.uid, req.body.user_uid)
     .then(result => {
         cache.rpush('detail', req.params.chatId, JSON.stringify({
-            sender: 0,
+            sender: 'admin',
             message: "---Leaved---"
         }))
         .then(result => {
@@ -218,3 +218,4 @@ module.exports.delete_msg = (req, res, next) => {
         })
     })
 }
+
