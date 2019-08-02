@@ -7,4 +7,4 @@ mysqlDB.connect(function(err) {
     console.log('mysql connected');
 });
 
-app.listen(3000)
+app.listen(3000)    

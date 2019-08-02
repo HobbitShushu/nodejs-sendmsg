@@ -26,7 +26,6 @@ router.get('/real_time/:chatId', checkSession, ChatController.get_chat_detail, f
     data.name = req.session.user_name
     data.msg = res.data
     socket.makeSocket(req.session.uid, req.session.user_name, req.params.chatId)
-    console.log(data)
     res.render('real_time_chat', data)
 });
 

@@ -52,11 +52,12 @@ module.exports.get_chat_detail = (req, res, next) => {
         });
     })
 }
+
 /*
   url&&params:  
   need session
   check block time and report count
-  req
+  req.body - form application/json
     gender: 0, 1, 2
     nation: 0, 1 ...
     msg: string
@@ -128,14 +129,14 @@ module.exports.send_random_msg = (req, res, next) => {
 /*
   url&&params:chat/msg/:chatId
   method: post
-  req
+  req.body - form application/json
     to
     msg
 */
 module.exports.reply_msg = (req, res, next) => {
     const msg = JSON.stringify({
         chat_id: req.params.chatId,
-        sender: req.session.uid,
+        sender: req.session.user_name,
         message: req.body.msg,
         send_time: Date.now()
     })
@@ -153,7 +154,7 @@ module.exports.reply_msg = (req, res, next) => {
             promise_list.push(cache.hset('list', req.session.uid, req.body.to, msg))
             promise_list.push(cache.hset('list', req.body.to, req.session.uid, msg))
             promise_list.push(cache.rpush('detail', req.params.chatId, JSON.stringify({
-                sender: req.session.uid,
+                sender: req.session.user_name,
                 message: req.body.msg,
                 send_time: Date.now()
             })))
@@ -173,6 +174,7 @@ module.exports.reply_msg = (req, res, next) => {
         return res.status(500).json({error:error, message:'Fail to reply'})
     })
 }
+
 /*
   url&&params: msg/:chatId
   need session ( logined state )
